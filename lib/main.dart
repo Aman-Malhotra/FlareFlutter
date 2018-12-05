@@ -1,3 +1,4 @@
+import 'package:flare/flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flare/flare_actor.dart';
 
@@ -8,9 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primaryColor: Colors.white, accentColor: Colors.teal),
       home: MyHomePage(),
     );
   }
@@ -22,7 +21,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool isPaused = false;
+  FlareController controller;
+  FlutterActorArtboard artboard;
   void initState() {
     super.initState();
   }
@@ -34,16 +34,32 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Sample for Flare"),
         centerTitle: true,
       ),
-      body: FlareActor(
-        "assets/PokeBall.flr",
-        animation: "Move",
-        isPaused: isPaused,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-        },
-        mini: true,
-        child: (isPaused) ? Icon(Icons.play_arrow) : Icon(Icons.pause),
+      body: Stack(
+        children: <Widget>[
+          Card(
+            child: Container(
+              height: double.infinity,
+            ),
+            color: Theme.of(context).accentColor,
+          ),
+          FlareActor(
+            "assets/PokeBall.flr",
+            controller: controller,
+            alignment: Alignment.topCenter,
+            animation: "Move",
+          ),
+          FlareActor(
+            "assets/PokeBall.flr",
+            controller: controller,
+            animation: "Move",
+          ),
+          FlareActor(
+            "assets/PokeBall.flr",
+            controller: controller,
+            alignment: Alignment.bottomCenter,
+            animation: "Move",
+          ),
+        ],
       ),
     );
   }
